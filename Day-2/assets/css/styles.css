@@ -9,6 +9,10 @@
     color: #00bdc4;
 }
 
+.heading:hover {
+    opacity: 0.9;
+}
+
 .row {
     margin-top: 20px;
     display: flex;
@@ -20,10 +24,11 @@
 
 .row .about p {
     color: #a5a4a4;
-    padding: 20px;
+    padding: 20px 20px 20px 300px;
 }
 
 .row img {
+    margin-right: 500px;
     width: 200px;
     height: 200px;
     object-fit: cover;
