@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Hướng dẫn tạo ứng dụng Todo List bằng HTML, CSS và JavaScript
+        </title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css"
+        />
+    </head>
+    <body>
+        <ul>
+            <li>
+                <a href="./index.html">1. Tạo trang hiển thị một bài thơ</a>
+            </li>
+            <li>
+                <a href="./news.html"
+                    >2. Tạo một bài viết nói về bài thơ trên</a
+                >
+            </li>
+            <li>
+                <a href="./blog.html"
+                    >3. Highlight code trong nội dung bài viết</a
+                >
+            </li>
+            <li>
+                <a href="./intro.html">4. Xây dựng trang giới thiệu bản thân</a>
+            </li>
+        </ul>
+        <h1>Hướng dẫn tạo ứng dụng Todo List bằng HTML, CSS và JavaScript</h1>
+        <p>Mục tiêu:</p>
+        <p>
+            Chúng ta sẽ xây dựng một ứng dụng Todo List đơn giản có thể chạy
+            trực tiếp trên trình duyệt mà không cần backend.
+        </p>
+        <h2>1. Tạo giao diện HTML</h2>
+        <p>
+            Trước tiên, ta sẽ tạo một file HTML để định hình cấu trúc giao diện.
+        </p>
+        <pre><code class="language-html">&lt;!-- index.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;vi&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;/&gt;
+  &lt;title&gt;Todo List App&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot; /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h1&gt;Todo List&lt;/h1&gt;
+    &lt;div class=&quot;todo-input&quot;&gt;
+      &lt;input type=&quot;text&quot; id=&quot;todo-input&quot; placeholder=&quot;Nhập công việc...&quot; /&gt;
+      &lt;button id=&quot;add-btn&quot;&gt;Thêm&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;ul id=&quot;todo-list&quot;&gt;&lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <p>Giải thích:</p>
+        <ul>
+            <li><code>input</code> dùng để người dùng nhập công việc.</li>
+            <li><code>button</code> để thêm công việc vào danh sách.</li>
+            <li><code>ul</code> là nơi hiển thị danh sách các công việc.</li>
+        </ul>
+        <h2>2. Thiết kế giao diện với CSS</h2>
+        <p>Tạo file <code>style.css</code> để làm đẹp ứng dụng.</p>
+        <pre><code  class="language-css">/* style.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.container {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  width: 300px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.todo-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#todo-input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+#add-btn {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+#todo-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 6px;
+  border-bottom: 1px solid #ddd;
+}
+
+#todo-list li button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+}</code></pre>
+        <p>Giải thích:</p>
+        <ul>
+            <li>CSS giúp căn giữa khung todo, thêm màu nền và bo góc.</li>
+            <li>
+                Các nút, input và danh sách đều được bố trí gọn gàng, dễ nhìn.
+            </li>
+        </ul>
+        <h2>3. Thêm tính năng với JavaScript</h2>
+        <p>
+            Tạo file <code>script.js</code> để xử lý logic thêm, hiển thị và xóa
+            công việc.
+        </p>
+        <pre><code class="language-js">// script.js
+const input = document.getElementById(&apos;todo-input&apos;);
+const addBtn = document.getElementById(&apos;add-btn&apos;);
+const todoList = document.getElementById(&apos;todo-list&apos;);
+
+// Xử lý khi click nút &quot;Thêm&quot;
+addBtn.addEventListener(&apos;click&apos;, function () {
+  const task = input.value.trim();
+  if (task !== &apos;&apos;) {
+    addTodo(task);
+    input.value = &apos;&apos;; // Xóa nội dung input sau khi thêm
+  }
+});
+
+// Hàm thêm công việc vào danh sách
+function addTodo(task) {
+  const li = document.createElement(&apos;li&apos;);
+  li.textContent = task;
+
+  const deleteBtn = document.createElement(&apos;button&apos;);
+  deleteBtn.textContent = &apos;Xóa&apos;;
+
+  // Khi click &quot;Xóa&quot;, xóa phần tử cha (li)
+  deleteBtn.addEventListener(&apos;click&apos;, function () {
+    todoList.removeChild(li);
+  });
+
+  li.appendChild(deleteBtn);
+  todoList.appendChild(li);
+}</code></pre>
+        <p>Giải thích:</p>
+        <ul>
+            <li>
+                Khi người dùng nhấn nút "Thêm", nội dung trong ô input được lấy
+                ra và truyền vào hàm <code>addTodo()</code>.
+            </li>
+            <li>
+                Trong hàm <code>addTodo()</code>, chúng ta tạo một thẻ
+                <code>&lt;li&gt;</code> để chứa công việc và một nút "Xóa".
+            </li>
+            <li>Nút "Xóa" có sự kiện để xóa phần tử cha (là công việc đó).</li>
+        </ul>
+        <h2>✅ Kết quả đạt được</h2>
+        <p>Khi chạy ứng dụng:</p>
+        <ul>
+            <li>Bạn có thể nhập công việc và nhấn "Thêm" để hiển thị.</li>
+            <li>
+                Mỗi công việc sẽ có một nút "Xóa" để loại bỏ nó khỏi danh sách.
+            </li>
+        </ul>
+        <h2>💡 Gợi ý nâng cao (tuỳ chọn)</h2>
+        <p>Bạn có thể nâng cấp thêm:</p>
+        <ul>
+            <li>
+                Lưu danh sách vào <code>localStorage</code> để không bị mất khi
+                reload.
+            </li>
+            <li>Thêm nút "Hoàn thành" để đánh dấu công việc đã xong.</li>
+            <li>Cho phép sửa nội dung công việc đã thêm.</li>
+        </ul>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    </body>
+</html>

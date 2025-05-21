@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+}
+
+.heading {
+    text-align: center;
+    padding: 20px;
+    background-color: #2d2929;
+    color: #00bdc4;
+}
+
+.row {
+    margin-top: 20px;
+    display: flex;
+}
+
+.row .about {
+    width: 50%;
+}
+
+.row .about p {
+    color: #a5a4a4;
+    padding: 20px;
+}
+
+.row img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-left: auto;
+    border-radius: 12px;
+    border: 1px solid #e7e3e3;
+}
+
+.info {
+    padding: 20px;
+}
+
+.info p {
+    color: #00bdc4;
+}
+
+.info ul li,
+.info ul a {
+    color: #a5a4a4;
+}
+
+.info ul a {
+    text-decoration: none;
+}
+
+.info ul a:hover {
+    text-decoration: underline;
+}
